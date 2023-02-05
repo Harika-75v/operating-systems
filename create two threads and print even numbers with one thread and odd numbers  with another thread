@@ -1,0 +1,30 @@
+#include <pthread.h>
+#include <stdio.h>
+
+#define MAX_NUM 20
+
+void *print_even(void *arg) {
+    for (int i = 2; i <= MAX_NUM; i += 2) {
+        printf("Even: %d\n", i);
+    }
+    return NULL;
+}
+
+void *print_odd(void *arg) {
+    for (int i = 1; i <= MAX_NUM; i += 2) {
+        printf("Odd: %d\n", i);
+    }
+    return NULL;
+}
+
+int main() {
+    pthread_t even_thread, odd_thread;
+
+    pthread_create(&even_thread, NULL, print_even, NULL);
+    pthread_create(&odd_thread, NULL, print_odd, NULL);
+
+    pthread_join(even_thread, NULL);
+    pthread_join(odd_thread, NULL);
+
+    return 0;
+}
