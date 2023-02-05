@@ -1,0 +1,56 @@
+#include<stdio.h>
+#define MAX 200
+
+int main()
+{
+    int queue[MAX], head, seek = 0, n, i, j, k, diff;
+    float average;
+
+    printf("Enter the size of Queue\n");
+    scanf("%d", &n);
+
+    printf("Enter the Queue elements\n");
+    for (i = 0; i < n; i++) 
+    {
+        scanf("%d", &queue[i]);
+    }
+    printf("Enter the initial head position\n");
+    scanf("%d", &head);
+
+    //LOOK disk scheduling algorithm
+    for (i = 0; i < n - 1; i++) 
+    {
+        for (j = i + 1; j < n; j++) 
+        {
+            if (queue[i] > queue[j]) 
+            {
+                int temp = queue[i];
+                queue[i] = queue[j];
+                queue[j] = temp;
+            }
+        }
+    }
+
+    //Find the index of head in queue
+    for (i = 0; i < n; i++) 
+    {
+        if (head == queue[i]) 
+        {
+            k = i;
+            break;
+        }
+    }
+
+    //Calculating average head movement
+    for (i = k; i < n - 1; i++) 
+    {
+        diff = queue[i + 1] - queue[i];
+        seek += diff;
+    }
+    average = (float)seek / (float)(n - k);
+
+    printf("\nTotal Seek Time is %d\n", seek);
+    printf("Average Seek Time is %f\n", average);
+
+    return 0;
+}
